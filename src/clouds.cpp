@@ -46,7 +46,8 @@ Clouds::Clouds(
 	m_seed(seed),
 	m_camera_pos(0,0),
 	m_time(0),
-	m_camera_offset(0,0,0)
+	m_camera_offset(0,0,0),
+	m_density(0.4)
 {
 	m_material.setFlag(video::EMF_LIGHTING, false);
 	//m_material.setFlag(video::EMF_BACK_FACE_CULLING, false);
@@ -191,7 +192,10 @@ void Clouds::render()
 					(float)p_in_noise_i.X * cloud_size_noise,
 					(float)p_in_noise_i.Y * cloud_size_noise,
 					m_seed, 3, 0.5);
-			grid[i] = (noise >= 0.4);
+			// normalize to 0..1 (given 3 octaves)
+			double noise_bound = 1.0 + 0.5 + 0.25;
+			double density = noise / noise_bound * 0.5 + 0.5;
+			grid[i] = (density < m_density);
 		}
 	}
 

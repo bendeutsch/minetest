@@ -97,6 +97,7 @@ private:
 	v2f m_camera_pos;
 	float m_time;
 	v3s16 m_camera_offset;
+	float m_density;
 };
 
 
