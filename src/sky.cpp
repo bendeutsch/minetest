@@ -22,7 +22,8 @@ Sky::Sky(scene::ISceneNode* parent, scene::ISceneManager* mgr, s32 id,
 		m_cloud_brightness(0.5),
 		m_bgcolor_bright_f(1, 1, 1, 1),
 		m_skycolor_bright_f(1, 1, 1, 1),
-		m_cloudcolor_bright_f(1, 1, 1, 1)
+		m_cloudcolor_bright_f(1, 1, 1, 1),
+		m_cloudcolor_base(255, 240, 240, 255)
 {
 	setAutomaticCulling(scene::EAC_OFF);
 	m_box.MaxEdge.set(0, 0, 0);
@@ -526,8 +527,11 @@ void Sky::update(float time_of_day, float time_brightness,
 	video::SColorf skycolor_bright_dawn_f = video::SColor(255, 180, 186, 250);
 	video::SColorf skycolor_bright_night_f = video::SColor(255, 0, 107, 255);
 	
-	video::SColorf cloudcolor_bright_normal_f = video::SColor(255, 240, 240, 255);
-	video::SColorf cloudcolor_bright_dawn_f = video::SColor(255, 255, 223, 191);
+	video::SColorf cloudcolor_bright_normal_f = m_cloudcolor_base;
+	video::SColorf cloudcolor_bright_dawn_f = m_cloudcolor_base;
+	cloudcolor_bright_dawn_f.r *= 255.0/240.0;
+	cloudcolor_bright_dawn_f.g *= 223.0/240.0;
+	cloudcolor_bright_dawn_f.b *= 191.0/255.0;
 
 	float cloud_color_change_fraction = 0.95;
 	if (sunlight_seen) {

@@ -68,6 +68,13 @@ public:
 	
 	bool getCloudsVisible(){ return m_clouds_visible && m_visible; }
 	video::SColorf getCloudColor(){ return m_cloudcolor_f; }
+	// The *base* color from which the actual color is derived
+	video::SColor getCloudColorBase(){
+		return m_cloudcolor_base;
+	}
+	void setCloudColorBase(const video::SColor &cloudcolor_base){
+		m_cloudcolor_base = cloudcolor_base;
+	}
 
 	void setVisible(bool visible){ m_visible = visible; }
 	void setFallbackBgColor(const video::SColor &fallback_bg_color){
@@ -130,6 +137,7 @@ private:
 	video::SColor m_bgcolor;
 	video::SColor m_skycolor;
 	video::SColorf m_cloudcolor_f;
+	video::SColor m_cloudcolor_base;
 	v3f m_stars[SKY_STAR_COUNT];
 	video::S3DVertex m_star_vertices[SKY_STAR_COUNT*4];
 	video::ITexture* m_sun_texture;
