@@ -76,6 +76,13 @@ public:
 		m_cloudcolor_base = cloudcolor_base;
 	}
 
+	float getCloudGlow(){ return m_cloud_glow; }
+	void setCloudGlow(float glow){
+		m_cloud_glow = glow;
+		if (m_cloud_glow < 0.0) m_cloud_glow = 0.0;
+		if (m_cloud_glow > 1.0) m_cloud_glow = 1.0;
+	}
+
 	void setVisible(bool visible){ m_visible = visible; }
 	void setFallbackBgColor(const video::SColor &fallback_bg_color){
 		m_fallback_bg_color = fallback_bg_color;
@@ -138,6 +145,7 @@ private:
 	video::SColor m_skycolor;
 	video::SColorf m_cloudcolor_f;
 	video::SColor m_cloudcolor_base;
+	float m_cloud_glow;
 	v3f m_stars[SKY_STAR_COUNT];
 	video::S3DVertex m_star_vertices[SKY_STAR_COUNT*4];
 	video::ITexture* m_sun_texture;

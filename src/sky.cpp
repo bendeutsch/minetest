@@ -23,7 +23,8 @@ Sky::Sky(scene::ISceneNode* parent, scene::ISceneManager* mgr, s32 id,
 		m_bgcolor_bright_f(1, 1, 1, 1),
 		m_skycolor_bright_f(1, 1, 1, 1),
 		m_cloudcolor_bright_f(1, 1, 1, 1),
-		m_cloudcolor_base(255, 240, 240, 255)
+		m_cloudcolor_base(255, 240, 240, 255),
+		m_cloud_glow(0.0)
 {
 	setAutomaticCulling(scene::EAC_OFF);
 	m_box.MaxEdge.set(0, 0, 0);
@@ -672,6 +673,10 @@ void Sky::update(float time_of_day, float time_brightness,
 		}
 	} else {
 		cloud_direct_brightness = direct_brightness;
+	}
+	// Clouds may "glow" with a minimal brightness
+	if (cloud_direct_brightness < m_cloud_glow) {
+		cloud_direct_brightness = m_cloud_glow;
 	}
 
 	m_cloud_brightness = m_cloud_brightness * cloud_color_change_fraction +
