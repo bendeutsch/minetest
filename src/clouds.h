@@ -85,6 +85,11 @@ public:
 
 	void readSettings();
 
+	void setDensity(float density) {
+		m_density = density;
+		// currently does not need bounding
+	}
+
 private:
 	video::SMaterial m_material;
 	aabb3f m_box;
