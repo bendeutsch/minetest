@@ -1672,6 +1672,31 @@ int ObjectRef::l_get_sky(lua_State *L)
 	return 3;
 }
 
+// set_clouds(self, density, color, glow)
+int ObjectRef::l_set_clouds(lua_State *L)
+{
+	NO_MAP_LOCK_REQUIRED;
+	ObjectRef *ref = checkobject(L, 1);
+	Player *player = getplayer(ref);
+	if (player == NULL)
+		return 0;
+
+	float density = luaL_checknumber(L, 2);
+
+	video::SColor color(255,255,255,255);
+	read_color(L, 3, &color);
+
+	float glow = luaL_checknumber(L, 4);
+
+	std::string type = luaL_checkstring(L, 3);
+
+	if (!getServer(L)->setClouds(player, density, color, glow))
+		return 0;
+
+	lua_pushboolean(L, true);
+	return 1;
+}
+
 // override_day_night_ratio(self, brightness=0...1)
 int ObjectRef::l_override_day_night_ratio(lua_State *L)
 {
@@ -1852,6 +1877,7 @@ const luaL_reg ObjectRef::methods[] = {
 	luamethod(ObjectRef, hud_get_hotbar_selected_image),
 	luamethod(ObjectRef, set_sky),
 	luamethod(ObjectRef, get_sky),
+	luamethod(ObjectRef, set_clouds),
 	luamethod(ObjectRef, override_day_night_ratio),
 	luamethod(ObjectRef, get_day_night_ratio),
 	luamethod(ObjectRef, set_local_animation),
