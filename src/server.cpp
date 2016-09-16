@@ -1800,6 +1800,15 @@ void Server::SendSetSky(u16 peer_id, const video::SColor &bgcolor,
 	Send(&pkt);
 }
 
+void Server::SendSetClouds(u16 peer_id, const float density,
+		const video::SColor &color, const float glow)
+{
+	NetworkPacket pkt(TOCLIENT_SET_CLOUDS, 0, peer_id);
+	pkt << (u16) (density  * 65535 ) << color << (u16) ( glow * 65535 );
+
+	Send(&pkt);
+}
+
 void Server::SendOverrideDayNightRatio(u16 peer_id, bool do_override,
 		float ratio)
 {
@@ -3109,6 +3118,16 @@ bool Server::setSky(Player *player, const video::SColor &bgcolor,
 
 	player->setSky(bgcolor, type, params);
 	SendSetSky(player->peer_id, bgcolor, type, params);
+	return true;
+}
+
+bool Server::setClouds(Player *player, const float density,
+	const video::SColor &color, const float glow)
+{
+	if (!player)
+		return false;
+
+	SendSetClouds(player->peer_id, density, color, glow);
 	return true;
 }
 

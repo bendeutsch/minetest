@@ -1161,6 +1161,23 @@ void Client::handleCommand_HudSetSky(NetworkPacket* pkt)
 	m_client_event_queue.push(event);
 }
 
+void Client::handleCommand_HudSetClouds(NetworkPacket* pkt)
+{
+	std::string datastring(pkt->getString(0), pkt->getSize());
+	std::istringstream is(datastring, std::ios_base::binary);
+
+	u16 density                      = readU16(is);
+	video::SColor *color             = new video::SColor(readARGB8(is));
+	u16 glow                         = readU16(is);
+
+	ClientEvent event;
+	event.type               = CE_SET_CLOUDS;
+	event.set_clouds.density = density / 65535.0;
+	event.set_clouds.color   = color;
+	event.set_clouds.glow    = glow / 65535.0;
+	m_client_event_queue.push(event);
+}
+
 void Client::handleCommand_OverrideDayNightRatio(NetworkPacket* pkt)
 {
 	bool do_override;
