@@ -105,6 +105,11 @@ Player::Player(IGameDef *gamedef, const char *name):
 		HUD_FLAG_BREATHBAR_VISIBLE | HUD_FLAG_MINIMAP_VISIBLE;
 
 	hud_hotbar_itemcount = HUD_HOTBAR_ITEMCOUNT_DEFAULT;
+
+	// copy defaults
+	m_cloud_settings.density = 0.4;
+	m_cloud_settings.color = video::SColor(255, 240, 240, 255);
+	m_cloud_settings.glow = 0.0;
 }
 
 Player::~Player()

@@ -283,6 +283,9 @@ private:
 	// set_clouds(self, {density=, color=, glow=})
 	static int l_set_clouds(lua_State *L);
 
+	// get_clouds(self)
+	static int l_get_clouds(lua_State *L);
+
 	// override_day_night_ratio(self, type)
 	static int l_override_day_night_ratio(lua_State *L);
 

@@ -98,6 +98,13 @@ struct PlayerControl
 	float forw_move_joystick_axis;
 };
 
+struct CloudSettings
+{
+	float density;
+	video::SColor color;
+	float glow;
+};
+
 class Map;
 class IGameDef;
 struct CollisionInfo;
@@ -278,6 +285,16 @@ public:
 		*params = m_sky_params;
 	}
 
+	void setCloudSettings( CloudSettings cloud_settings)
+	{
+		m_cloud_settings = cloud_settings;
+	}
+
+	CloudSettings getCloudSettings()
+	{
+		return m_cloud_settings;
+	}
+
 	void overrideDayNightRatio(bool do_override, float ratio)
 	{
 		m_day_night_ratio_do_override = do_override;
@@ -429,6 +446,8 @@ protected:
 	std::string m_sky_type;
 	video::SColor m_sky_bgcolor;
 	std::vector<std::string> m_sky_params;
+
+	CloudSettings m_cloud_settings;
 
 	bool m_day_night_ratio_do_override;
 	float m_day_night_ratio;
