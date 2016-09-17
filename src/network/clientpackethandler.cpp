@@ -1166,9 +1166,9 @@ void Client::handleCommand_HudSetClouds(NetworkPacket* pkt)
 	std::string datastring(pkt->getString(0), pkt->getSize());
 	std::istringstream is(datastring, std::ios_base::binary);
 
-	u16 density                      = readU16(is);
-	video::SColor *color             = new video::SColor(readARGB8(is));
-	u16 glow                         = readU16(is);
+	u16 density              = readU16(is);
+	video::SColor *color     = new video::SColor(readARGB8(is));
+	u16 glow                 = readU16(is);
 
 	ClientEvent event;
 	event.type               = CE_SET_CLOUDS;

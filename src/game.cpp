@@ -3559,6 +3559,7 @@ void Game::processClientEvents(CameraOrientation *cam, float *damage_flash)
 			}
 			std::cout << "Setting cloud color " << event.set_clouds.color << std::endl;
 			sky->setCloudColorBase(*event.set_clouds.color);
+			delete event.set_clouds.color;
 			std::cout << "Setting cloud glow " << event.set_clouds.glow << std::endl;
 			sky->setCloudGlow(event.set_clouds.glow);
 		}
