@@ -1801,10 +1801,11 @@ void Server::SendSetSky(u16 peer_id, const video::SColor &bgcolor,
 }
 
 void Server::SendSetClouds(u16 peer_id, const float density,
-		const video::SColor &color, const float glow)
+		const video::SColor &color_bright,
+		const video::SColor &color_ambient)
 {
 	NetworkPacket pkt(TOCLIENT_SET_CLOUDS, 0, peer_id);
-	pkt << (u16) (density  * 65535 ) << color << (u16) ( glow * 65535 );
+	pkt << (u16) (density  * 65535 ) << color_bright << color_ambient;
 
 	Send(&pkt);
 }
@@ -3122,12 +3123,13 @@ bool Server::setSky(Player *player, const video::SColor &bgcolor,
 }
 
 bool Server::setClouds(Player *player, const float density,
-	const video::SColor &color, const float glow)
+	const video::SColor &color_bright,
+	const video::SColor &color_ambient)
 {
 	if (!player)
 		return false;
 
-	SendSetClouds(player->peer_id, density, color, glow);
+	SendSetClouds(player->peer_id, density, color_bright, color_ambient);
 	return true;
 }
 

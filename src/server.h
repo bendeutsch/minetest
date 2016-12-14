@@ -356,7 +356,8 @@ public:
 	bool setSky(Player *player, const video::SColor &bgcolor,
 			const std::string &type, const std::vector<std::string> &params);
 	bool setClouds(Player *player, const float density,
-			const video::SColor &bgcolor, const float glow);
+			const video::SColor &color_bright,
+			const video::SColor &color_ambient);
 
 	bool overrideDayNightRatio(Player *player, bool do_override,
 			float brightness);
@@ -425,7 +426,8 @@ private:
 	void SendSetSky(u16 peer_id, const video::SColor &bgcolor,
 			const std::string &type, const std::vector<std::string> &params);
 	void SendSetClouds(u16 peer_id, const float density,
-			const video::SColor &bgcolor, const float glow);
+			const video::SColor &color_bright,
+			const video::SColor &color_ambient);
 	void SendOverrideDayNightRatio(u16 peer_id, bool do_override, float ratio);
 
 	/*

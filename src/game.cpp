@@ -3554,14 +3554,15 @@ void Game::processClientEvents(CameraOrientation *cam, float *damage_flash)
 			client->getEnv().setDayNightRatioOverride(enable, value);
 		} else if (event.type == CE_SET_CLOUDS) {
 			if (clouds) {
-				std::cout << "Setting cloud density " << event.set_clouds.density << std::endl;
+				//dstream << "Setting cloud density " << event.set_clouds.density << std::endl;
 				clouds->setDensity(event.set_clouds.density);
 			}
-			std::cout << "Setting cloud color " << event.set_clouds.color << std::endl;
-			sky->setCloudColorBase(*event.set_clouds.color);
-			delete event.set_clouds.color;
-			std::cout << "Setting cloud glow " << event.set_clouds.glow << std::endl;
-			sky->setCloudGlow(event.set_clouds.glow);
+			//dstream << "Setting cloud color bright  " << std::hex << event.set_clouds.color_bright->color << std::dec << std::endl;
+			clouds->setColorBright(*event.set_clouds.color_bright);
+			delete event.set_clouds.color_bright;
+			//dstream << "Setting cloud color ambient " << std::hex << event.set_clouds.color_ambient->color << std::dec << std::endl;
+			clouds->setColorAmbient(*event.set_clouds.color_ambient);
+			delete event.set_clouds.color_ambient;
 		}
 	}
 }

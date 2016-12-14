@@ -101,8 +101,8 @@ struct PlayerControl
 struct CloudSettings
 {
 	float density;
-	video::SColor color;
-	float glow;
+	video::SColor color_bright;
+	video::SColor color_ambient;
 };
 
 class Map;

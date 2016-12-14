@@ -247,8 +247,8 @@ struct ClientEvent
 		} override_day_night_ratio;
 		struct{
 			float density;
-			video::SColor *color;
-			float glow;
+			video::SColor *color_bright;
+			video::SColor *color_ambient;
 		} set_clouds;
 	};
 };

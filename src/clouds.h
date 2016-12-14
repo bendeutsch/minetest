@@ -85,9 +85,20 @@ public:
 
 	void readSettings();
 
-	void setDensity(float density) {
+	void setDensity(float density)
+	{
 		m_density = density;
 		// currently does not need bounding
+	}
+
+	void setColorBright(video::SColor color_bright)
+	{
+		m_color_bright = color_bright;
+	}
+
+	void setColorAmbient(video::SColor color_ambient)
+	{
+		m_color_ambient = color_ambient;
 	}
 
 private:
@@ -97,12 +108,14 @@ private:
 	float m_cloud_y;
 	u16 m_cloud_radius_i;
 	bool m_enable_3d;
-	video::SColorf m_color;
 	u32 m_seed;
 	v2f m_camera_pos;
 	float m_time;
 	v3s16 m_camera_offset;
 	float m_density;
+	video::SColorf m_color;
+	video::SColorf m_color_bright;
+	video::SColorf m_color_ambient;
 };
 
 

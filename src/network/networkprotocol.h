@@ -598,8 +598,8 @@ enum ToClientCommand
 	TOCLIENT_SET_CLOUDS = 0x54,
 	/*
 		u16 density
-		u8[4] color (ARGB)
-		u16 glow
+		u8[4] color_diffuse (ARGB)
+		u8[4] color_ambient (ARGB)
 	*/
 
 

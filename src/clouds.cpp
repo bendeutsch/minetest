@@ -47,7 +47,10 @@ Clouds::Clouds(
 	m_camera_pos(0,0),
 	m_time(0),
 	m_camera_offset(0,0,0),
-	m_density(0.4)
+	m_density(0.4),
+	m_color(1.0, 1.0, 1.0, 1.0),
+	m_color_bright(255.0/255.0, 240.0/255.0, 240.0/255.0, 1.0),
+	m_color_ambient(0.0, 0.0, 0.0, 1.0)
 {
 	m_material.setFlag(video::EMF_LIGHTING, false);
 	//m_material.setFlag(video::EMF_BACK_FACE_CULLING, false);
@@ -352,12 +355,23 @@ void Clouds::step(float dtime)
 	m_time += dtime;
 }
 
-void Clouds::update(v2f camera_p, video::SColorf color)
+#if 0
+static void _out_color(std::string name, video::SColorf color) {
+	dstream << name << ": (" << color.r << ", " << color.g << ", " << color.b << ")" << std::endl;
+}
+#endif
+
+void Clouds::update(v2f camera_p, video::SColorf color_diffuse)
 {
 	m_camera_pos = camera_p;
-	m_color = color;
-	//m_brightness = brightness;
-	//dstream<<"m_brightness="<<m_brightness<<std::endl;
+	m_color.r = MYMIN(color_diffuse.r * m_color_bright.r + m_color_ambient.r, 1.0);
+	m_color.g = MYMIN(color_diffuse.g * m_color_bright.g + m_color_ambient.g, 1.0);
+	m_color.b = MYMIN(color_diffuse.b * m_color_bright.b + m_color_ambient.b, 1.0);
+	m_color.a = 1.0;
+	//_out_color("Cloud color diffuse", color_diffuse);
+	//_out_color("Cloud color bright", m_color_bright);
+	//_out_color("Cloud color ambient", m_color_ambient);
+	//_out_color("Cloud color", m_color);
 }
 
 void Clouds::readSettings()

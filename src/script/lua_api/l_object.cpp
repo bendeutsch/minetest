@@ -1672,7 +1672,13 @@ int ObjectRef::l_get_sky(lua_State *L)
 	return 3;
 }
 
-// set_clouds(self, {density=, color=, glow)
+#if 0
+static void _out_color(std::string name, video::SColorf color) {
+	dstream << name << ": (" << color.r << ", " << color.g << ", " << color.b << ")" << std::endl; 
+}
+#endif
+
+// set_clouds(self, {density=, color=, ambient=})
 int ObjectRef::l_set_clouds(lua_State *L)
 {
 	NO_MAP_LOCK_REQUIRED;
@@ -1685,24 +1691,26 @@ int ObjectRef::l_set_clouds(lua_State *L)
 	if (lua_istable(L, 2)) {
 
 		cloud_settings.density = getfloatfield_default(L, 2, "density", cloud_settings.density);
-		cloud_settings.glow = getfloatfield_default(L, 2, "glow", cloud_settings.glow);
 
 		lua_getfield(L, 2, "color");
 		if(!lua_isnil(L, -1)) {
-			read_color(L, -1, &cloud_settings.color);
+			read_color(L, -1, &cloud_settings.color_bright);
+			//_out_color("Lua bright", cloud_settings.color_bright);
+		}
+		lua_pop(L, 1);
+		lua_getfield(L, 2, "ambient");
+		if(!lua_isnil(L, -1)) {
+			read_color(L, -1, &cloud_settings.color_ambient);
+			//_out_color("Lua ambient", cloud_settings.color_ambient);
 		}
 		lua_pop(L, 1);
 	}
 
-	//float density = luaL_checknumber(L, 2);
 
-	//video::SColor color(255,255,255,255);
-	//read_color(L, 3, &color);
-
-	//float glow = luaL_checknumber(L, 4);
-
-	if (!getServer(L)->setClouds(player, cloud_settings.density, cloud_settings.color, cloud_settings.glow))
+	if (!getServer(L)->setClouds(player, cloud_settings.density, cloud_settings.color_bright, cloud_settings.color_ambient))
 		return 0;
+
+	player->setCloudSettings(cloud_settings);
 
 	lua_pushboolean(L, true);
 	return 1;
@@ -1720,10 +1728,10 @@ int ObjectRef::l_get_clouds(lua_State *L)
 	lua_newtable(L);
 	lua_pushnumber(L, cloud_settings.density);
 	lua_setfield(L, -2, "density");
-	push_ARGB8(L, cloud_settings.color);
+	push_ARGB8(L, cloud_settings.color_bright);
 	lua_setfield(L, -2, "color");
-	lua_pushnumber(L, cloud_settings.glow);
-	lua_setfield(L, -2, "glow");
+	push_ARGB8(L, cloud_settings.color_ambient);
+	lua_setfield(L, -2, "ambient");
 
 	return 1;
 }
