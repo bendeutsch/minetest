@@ -3556,7 +3556,10 @@ void Game::processClientEvents(CameraOrientation *cam, float *damage_flash)
 			if (clouds) {
 				//dstream << "Setting cloud density " << event.set_clouds.density << std::endl;
 				clouds->setDensity(event.set_clouds.density);
+				//dstream << "Setting cloud height " << event.set_clouds.height << std::endl;
+				clouds->setHeight(event.set_clouds.height);
 			}
+			// TODO: move into if block
 			//dstream << "Setting cloud color bright  " << std::hex << event.set_clouds.color_bright->color << std::dec << std::endl;
 			clouds->setColorBright(*event.set_clouds.color_bright);
 			delete event.set_clouds.color_bright;

@@ -1678,7 +1678,7 @@ static void _out_color(std::string name, video::SColorf color) {
 }
 #endif
 
-// set_clouds(self, {density=, color=, ambient=})
+// set_clouds(self, {density=, color=, ambient=, height=})
 int ObjectRef::l_set_clouds(lua_State *L)
 {
 	NO_MAP_LOCK_REQUIRED;
@@ -1704,10 +1704,13 @@ int ObjectRef::l_set_clouds(lua_State *L)
 			//_out_color("Lua ambient", cloud_settings.color_ambient);
 		}
 		lua_pop(L, 1);
+
+		cloud_settings.height = getfloatfield_default(L, 2, "height", cloud_settings.height);
 	}
 
 
-	if (!getServer(L)->setClouds(player, cloud_settings.density, cloud_settings.color_bright, cloud_settings.color_ambient))
+	if (!getServer(L)->setClouds(player, cloud_settings.density, cloud_settings.color_bright,
+		cloud_settings.color_ambient, cloud_settings.height))
 		return 0;
 
 	player->setCloudSettings(cloud_settings);
@@ -1732,6 +1735,8 @@ int ObjectRef::l_get_clouds(lua_State *L)
 	lua_setfield(L, -2, "color");
 	push_ARGB8(L, cloud_settings.color_ambient);
 	lua_setfield(L, -2, "ambient");
+	lua_pushnumber(L, cloud_settings.height);
+	lua_setfield(L, -2, "height");
 
 	return 1;
 }

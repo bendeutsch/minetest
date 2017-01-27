@@ -110,6 +110,7 @@ Player::Player(IGameDef *gamedef, const char *name):
 	m_cloud_settings.density = 0.4;
 	m_cloud_settings.color_bright = video::SColor(255, 255, 240, 240);
 	m_cloud_settings.color_ambient = video::SColor(255, 0, 0, 0);
+	m_cloud_settings.height = 120.0;
 }
 
 Player::~Player()
