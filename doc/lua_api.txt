@@ -4236,6 +4236,7 @@ Definition tables
                 },
             },
         },
+        speed_factor = 1.0, -- Player speed when moving on or in node
 
         on_construct = func(pos), --[[
         ^ Node constructor; called after adding node
